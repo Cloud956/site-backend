@@ -8,7 +8,7 @@ def denoise(image):
     FT = np.fft.fft2(image)
     keeping = 0.05
     FTcopy = FT.copy()
-    h, w = FTcopy.shape
+    h, w = FTcopy.shapes
     FTcopy[int(h * keeping):int(w * (1 - keeping))] = 1
     FTcopy[:, int(w * keeping):int(w * (1 - keeping))] = 1
     return (np.fft.ifft2(FTcopy).real)
