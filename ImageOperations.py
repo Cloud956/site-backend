@@ -1,4 +1,4 @@
-import cv2, numpy as np, math, random
+import cv2_rgb as cv2, numpy as np, math, random
 from scipy.signal import convolve2d
 from skimage.util import random_noise
 
@@ -8,7 +8,7 @@ def denoise(image):
     FT = np.fft.fft2(image)
     keeping = 0.05
     FTcopy = FT.copy()
-    h, w = FTcopy.shapes
+    h, w = FTcopy.shape
     FTcopy[int(h * keeping):int(w * (1 - keeping))] = 1
     FTcopy[:, int(w * keeping):int(w * (1 - keeping))] = 1
     return (np.fft.ifft2(FTcopy).real)
@@ -331,13 +331,17 @@ def k_means(image, k):
     # it applies the edges as black onto the image
 
 
-def resizing(image, scale):
-    width = int(image.shape[1] * scale / 100)
-    height = int(image.shape[0] * scale / 100)
-    newSize = (width, height)
-    return cv2.resize(image, newSize, interpolation=cv2.INTER_NEAREST)
 
 
-def resizing(image, width, height):
-    newSize = (width, height)
-    return cv2.resize(image, newSize, interpolation=cv2.INTER_NEAREST)
+def resizing(image, *args):
+    if len(args) == 1:
+        scale, = args
+        width = int(image.shape[1] * scale / 100)
+        height = int(image.shape[0] * scale / 100)
+        newSize = (width, height)
+        return cv2.resize(image, newSize, interpolation=cv2.INTER_NEAREST)
+    else:
+        width, height = args
+        newSize = (width, height)
+        return cv2.resize(image, newSize, interpolation=cv2.INTER_NEAREST)
+

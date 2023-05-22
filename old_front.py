@@ -145,11 +145,11 @@ def update_left(*args):
                 entry1.insert(INSERT, "5")
                 entry1.pack()
                 button = Button(LeftBox, text="Detect the edges on the main image!",
-                                command=lambda: shapes_exec(int(entry1.get())))
+                                command=lambda: shapes_exec(int(entry1.get()),return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="Detect the edges on the current image!",
-                                command=lambda: shapes_exec(int(entry1.get()), 1))
+                                command=lambda: shapes_exec(int(entry1.get()), return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()
             case "K_means":
@@ -162,11 +162,11 @@ def update_left(*args):
                 label1.pack()
                 entry1.pack()
                 button = Button(LeftBox, text="K_means transform the main image!",
-                                command=lambda: k_means_exec(int(entry1.get())))
+                                command=lambda: k_means_exec(int(entry1.get()),return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="K_means transform the current image!",
-                                command=lambda: k_means_exec(int(entry1.get()), 1))
+                                command=lambda: k_means_exec(int(entry1.get()), return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()  # "Linear sampling","Nearest Neighbour sampling"
             case "Linear sampling":
@@ -179,11 +179,11 @@ def update_left(*args):
                 entry1.pack()
                 entry1.insert(INSERT, "5")
                 button = Button(LeftBox, text="Sample the main image",
-                                command=lambda: linear_sampling_exec(int(entry1.get())))
+                                command=lambda: linear_sampling_exec(int(entry1.get()),return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="Sample the current image",
-                                command=lambda: linear_sampling_exec(int(entry1.get()), 1))
+                                command=lambda: linear_sampling_exec(int(entry1.get()), return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()
             case "Nearest Neighbour sampling":
@@ -196,11 +196,11 @@ def update_left(*args):
                 entry1.insert(INSERT, "5")
                 entry1.pack()
                 button = Button(LeftBox, text="Sample the main image",
-                                command=lambda: nearest_sampling_exec(int(entry1.get())))
+                                command=lambda: nearest_sampling_exec(int(entry1.get()),return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="Sample the current image",
-                                command=lambda: nearest_sampling_exec(int(entry1.get()), 1))
+                                command=lambda: nearest_sampling_exec(int(entry1.get()), return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()
             case "Uniform quantization GRAY":
@@ -213,11 +213,11 @@ def update_left(*args):
                 label1.pack()
                 entry1.pack()
                 button = Button(LeftBox, text="Uniformly quantize the main image!",
-                                command=lambda: uniform_quan_exec(int(entry1.get())))
+                                command=lambda: uniform_quan_exec(int(entry1.get()),return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="Uniformly quantize the current image!",
-                                command=lambda: uniform_quan_exec(int(entry1.get()), 1))
+                                command=lambda: uniform_quan_exec(int(entry1.get()), return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()
             case "Gaussian Noise":
@@ -230,11 +230,11 @@ def update_left(*args):
                 label1.pack()
                 entry1.pack()
                 button = Button(LeftBox, text="Apply noise to the main image!",
-                                command=lambda: gauss_exec(int(entry1.get())))
+                                command=lambda: gauss_exec(int(entry1.get()),return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="Apply noise to the current image!",
-                                command=lambda: gauss_exec(int(entry1.get()), 1))
+                                command=lambda: gauss_exec(int(entry1.get()), return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()
             case "Pointwise inverse":
@@ -242,11 +242,11 @@ def update_left(*args):
                             "Creates a negative of the image by applying the pointwise inverse operation.")
                 text.config(state=DISABLED, wrap=WORD)
                 button = Button(LeftBox, text="Invert the main image!",
-                                command=lambda: inverse_exec())
+                                command=lambda: inverse_exec(return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="Invert the current image!",
-                                command=lambda: inverse_exec(1))
+                                command=lambda: inverse_exec(return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()
             case "Power Law Transformation":
@@ -263,11 +263,11 @@ def update_left(*args):
                 label1.pack()
                 entry1.pack()
                 button = Button(LeftBox, text="Apply the transformation to the main image!",
-                                command=lambda: power_law_exec(float(entry1.get())))
+                                command=lambda: power_law_exec(float(entry1.get()),return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="Apply the transformation the current image!",
-                                command=lambda: power_law_exec(float(entry1.get()), 1))
+                                command=lambda: power_law_exec(float(entry1.get()), return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()
             case "Cartoonify":
@@ -296,12 +296,12 @@ def update_left(*args):
                 entry3.pack()
                 button = Button(LeftBox, text="Cartoonify the main image!",
                                 command=lambda: cartoonify_exec(float(entry1.get()), int(entry2.get()),
-                                                                float(entry3.get())))
+                                                                float(entry3.get()),return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="Cartoonify the current image!",
                                 command=lambda: cartoonify_exec(float(entry1.get()), int(entry2.get()),
-                                                                float(entry3.get()), 1))
+                                                                float(entry3.get()), return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()
             case "Translation - vertical and horizontal":
@@ -323,11 +323,11 @@ def update_left(*args):
                 entry2.pack()
 
                 button = Button(LeftBox, text="Cartoonify the main image!",
-                                command=lambda: translation_exec(int(entry1.get()), int(entry2.get())))
+                                command=lambda: translation_exec(return_image_of_transformation(True),int(entry1.get()), int(entry2.get())))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="Cartoonify the current image!",
-                                command=lambda: translation_exec(int(entry1.get()), int(entry2.get()), 1))
+                                command=lambda: translation_exec(return_image_of_transformation(True),int(entry1.get()), int(entry2.get())))
                 button.config(bg="#CFCF2F")
                 button.pack()
             case "Salt and Pepper Noise":
@@ -343,11 +343,11 @@ def update_left(*args):
                 entry1.pack()
 
                 button = Button(LeftBox, text="Apply salt and pepper to the main image!",
-                                command=lambda: salt_pepper_exec(int(entry1.get())))
+                                command=lambda: salt_pepper_exec(int(entry1.get()),return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="Apply salt and pepper to the current image!",
-                                command=lambda: salt_pepper_exec(int(entry1.get()), 1))
+                                command=lambda: salt_pepper_exec(int(entry1.get()), return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()
             case "Median filter":
@@ -363,11 +363,11 @@ def update_left(*args):
                 entry1.pack()
 
                 button = Button(LeftBox, text="Apply salt and pepper to the main image!",
-                                command=lambda: median_filter_exec(int(entry1.get())))
+                                command=lambda: median_filter_exec(int(entry1.get()),return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="Apply salt and pepper to the current image!",
-                                command=lambda: median_filter_exec(int(entry1.get()), 1))
+                                command=lambda: median_filter_exec(int(entry1.get()), return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()
             case "Horizontal Periodic Noise":
@@ -377,11 +377,11 @@ def update_left(*args):
                 text.config(state=DISABLED, wrap=WORD)
 
                 button = Button(LeftBox, text="Apply periodic noise to the main image!",
-                                command=lambda: horizontal_noise_exec())
+                                command=lambda: horizontal_noise_exec(return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="Apply periodic noise to the current image!",
-                                command=lambda: horizontal_noise_exec(1))
+                                command=lambda: horizontal_noise_exec(return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()
             case "Vertical Periodic Noise":
@@ -391,11 +391,11 @@ def update_left(*args):
                 text.config(state=DISABLED, wrap=WORD)
 
                 button = Button(LeftBox, text="Apply periodic noise to the main image!",
-                                command=lambda: vertical_noise_exec())
+                                command=lambda: vertical_noise_exec(return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="Apply periodic noise to the current image!",
-                                command=lambda: vertical_noise_exec(1))
+                                command=lambda: vertical_noise_exec(return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()
             case "FFT Power Spectrum":
@@ -405,11 +405,11 @@ def update_left(*args):
                 text.config(state=DISABLED, wrap=WORD)
 
                 button = Button(LeftBox, text="Display the power spectrum of the main image!",
-                                command=lambda: power_exec())
+                                command=lambda: power_exec(return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="Display the power spectrum of the current image!",
-                                command=lambda: power_exec(1))
+                                command=lambda: power_exec(return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()
             case "FFT Magnitude Spectrum":
@@ -419,11 +419,11 @@ def update_left(*args):
                 text.config(state=DISABLED, wrap=WORD)
 
                 button = Button(LeftBox, text="Display the magnitude spectrum of the main image!",
-                                command=lambda: magnitude_exec())
+                                command=lambda: magnitude_exec(return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="Display the magnitude spectrum of the current image!",
-                                command=lambda: magnitude_exec(1))
+                                command=lambda: magnitude_exec(return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()
             case "De-noise in FT":
@@ -432,11 +432,11 @@ def update_left(*args):
                 text.config(state=DISABLED, wrap=WORD)
 
                 button = Button(LeftBox, text="De-noise the main image!",
-                                command=lambda: denoise_fft_exec())
+                                command=lambda: denoise_fft_exec(return_image_of_transformation(True)))
                 button.config(bg="#CFCF2F")
                 button.pack()
                 button = Button(LeftBox, text="De-noise the current image!",
-                                command=lambda: denoise_fft_exec(1))
+                                command=lambda: denoise_fft_exec(return_image_of_transformation(False)))
                 button.config(bg="#CFCF2F")
                 button.pack()
 
@@ -448,7 +448,7 @@ def to_transform(option):
 
 
 def load_image(name):
-    # print(1)
+    # print(return_image_of_transformation(False))
     image = cv2.imread(name)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     return image
@@ -467,171 +467,109 @@ def updateCurrent(image):
     current_array = image
 
 
-def update_image(image):
+def update_image(image_array):
     global image_box, MainImage, current_array
     update_right()
     image_box.grid_forget()
-    MainImage = ImageTk.PhotoImage(Image.fromarray(image))
+    MainImage = ImageTk.PhotoImage(Image.fromarray(image_array))
     image_box = Label(image=MainImage)
     image_box.grid(row=1, column=3, columnspan=3)
-    if image.all() == None:
+    if image_array.all() == None:
         setWhite()
-    updateCurrent(image)
+    updateCurrent(image_array)
 
 
-def horizontal_noise_exec(bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = main_periodic_noise_horizontal(main_array)
-    if bool == 1:
-        im = main_periodic_noise_horizontal(current_array)
+def horizontal_noise_exec(image):
+    im = main_periodic_noise_horizontal(image)
     update_image(im)
 
-def vertical_noise_exec(bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = main_periodic_noise_vertical(main_array)
-    if bool == 1:
-        im = main_periodic_noise_vertical(current_array)
+def vertical_noise_exec(image):
+    im = main_periodic_noise_vertical(image)
     update_image(im)
 
 
 
-def salt_pepper_exec(r, bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = main_salt_pepper(main_array, r)
-    if bool == 1:
-        im = main_salt_pepper(current_array, r)
+def salt_pepper_exec(r, image):
+    im = main_salt_pepper(image, r)
     update_image(im)
-def denoise_fft_exec(bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = denoise(main_array)
-    if bool == 1:
-        im = denoise(current_array)
+def denoise_fft_exec(image):
+    im = denoise(image)
     update_image(im)
-def magnitude_exec(bool=0):
+
+def return_image_of_transformation(is_it_main):
     global main_array, current_array
-    if bool == 0:
-        im = giveMagnitude(main_array)
-    if bool == 1:
-        im = giveMagnitude(current_array)
+    if is_it_main:
+        return main_array
+    else:
+        return current_array
+def magnitude_exec(image):
+    im = giveMagnitude(image)
     update_image(im)
-def power_exec(bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = givePower(main_array)
-    if bool == 1:
-        im = givePower(current_array)
+def power_exec(image):
+    im = givePower(image)
     update_image(im)
-def translation_exec(t1=0, t2=0, bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = main_translate(main_array, t1, t2)
-    if bool == 1:
-        im = main_translate(current_array, t1, t2)
+def translation_exec(image,t1=0, t2=0):
+    im = main_translate(image, t1, t2)
     update_image(im)
 
 
-def power_law_exec(numbers, bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = main_power_law(main_array, numbers)
-    if bool == 1:
-        im = main_power_law(current_array, numbers)
+def power_law_exec(numbers, image):
+    im = main_power_law(image, numbers)
     update_image(im)
 
 
-def median_filter_exec(numbers, bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = main_median_filter(main_array, numbers)
-    if bool == 1:
-        im = main_median_filter(current_array, numbers)
+def median_filter_exec(numbers, image):
+    im = main_median_filter(image, numbers)
     update_image(im)
 
 
-def uniform_quan_exec(numbers, bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = uniform_quan(main_array, numbers)
-    if bool == 1:
-        im = uniform_quan(current_array, numbers)
+def uniform_quan_exec(numbers, image):
+    im = uniform_quan(main_array, numbers)
     update_image(im)
 
 
-def k_means_exec(numbers, bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = k_means(main_array, numbers)
-    if bool == 1:
-        im = k_means(current_array, numbers)
+def k_means_exec(numbers, image):
+    im = k_means(image, numbers)
     update_image(im)
 
 
-def cartoonify_exec(edge, k, outlines, bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = cartoonify(main_array, edge, k, outlines)
-    if bool == 1:
-        im = cartoonify(current_array, edge, k, outlines)
+def cartoonify_exec(edge, k, outlines, image):
+    im = cartoonify(image, edge, k, outlines)
     update_image(im)
 
 
-def inverse_exec(bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = main_inverse(main_array)
-    if bool == 1:
-        im = main_inverse(current_array)
+def inverse_exec(image):
+    im = main_inverse(image)
     update_image(im)
 
 
-def nearest_sampling_exec(numbers, bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = nearest_sampling(main_array, numbers)
-    if bool == 1:
-        im = nearest_sampling(current_array, numbers)
+def nearest_sampling_exec(numbers, image):
+    im = nearest_sampling(image, numbers)
     update_image(im)
 
 
-def gauss_exec(numbers, bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = main_noise(main_array, numbers)
-    if bool == 1:
-        im = main_noise(current_array, numbers)
+def gauss_exec(numbers, image):
+    im = main_noise(image, numbers)
     update_image(im)
 
 
-def linear_sampling_exec(numbers, bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = linear_sampling(main_array, numbers)
-    if bool == 1:
-        im = linear_sampling(current_array, numbers)
+def linear_sampling_exec(numbers, image):
+    im = linear_sampling(image, numbers)
     update_image(im)
 
 
-def shapes_exec(factor, bool=0):
-    global main_array, current_array
-    if bool == 0:
-        im = giveShapes(main_array, factor)
-    if bool == 1:
-        im = giveShapes(current_array, factor)
+def shapes_exec(factor, image):
+    im = giveShapes(image, factor)
     update_image(im)
 
 
 def update_main_image(filename):
     global main_array
     main_array = cv2.imread(filename)
-    main_array = cv2.cvtColor(main_array, cv2.COLOR_BGR2RGB)
     main_array = resizing(main_array, 1080, 720)
     update_image(main_array)
     update_left()
-    update_right();
+    update_right()
 
 
 def load_file():
