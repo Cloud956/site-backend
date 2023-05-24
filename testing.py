@@ -2,6 +2,12 @@ import cv2_rgb as cv2
 import numpy as np
 from ImageOperations import resizing
 file_path = 'bibi.jpg'
+
+def load_bibi():
+    main_array = cv2.imread(file_path)
+    main_array = cv2.cvtColor(main_array, cv2.COLOR_BGR2RGB)
+    main_array = resizing(main_array, 1080, 720)
+    return main_array
 def image_array_to_bytes(array : np.ndarray) -> bytes:
     into_list = array.tolist()
     str_version = str(into_list)

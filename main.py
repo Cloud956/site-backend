@@ -1,6 +1,10 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 
+class TransformationRequest(BaseModel):
+    name:  str
+    image: str
 app = FastAPI()
-@app.get('/')
-async def root():
-    return {"message": "Hello World"}
+@app.post('/')
+async def root(transformation : TransformationRequest):
+    return {"message": transformation.name}
