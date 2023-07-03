@@ -1,11 +1,16 @@
 import ListGroup from "./components/ListGroup";
-
+import Alert from "./components/Alert";
+import Button from "./components/Button";
+import bibi from "./images/bibi.jpg";
+import { useState } from "react";
+import TransformationsMenu from "./components/TransformationsMenu";
 function App() {
-  let items = ["Paris", "London", "Tokyo", "Seoul"];
-  const handleSelectItem = (item:string) =>{console.log(item)}
+  let items = ["TO RGB", "TO BLACK", "EDGE ENCODING"];
+  const onMenuItemClick = (item: string) => console.log(item);
   return (
     <div>
-      <ListGroup items={items} title="Cities" onSelectItem={handleSelectItem} />
+      <TransformationsMenu menuItems={items} onItemClick={onMenuItemClick} />
+      <img src={bibi} alt="BIIB" width="1080" height="720" />
     </div>
   );
 }
