@@ -345,3 +345,6 @@ def resizing(image, *args):
         newSize = (width, height)
         return cv2.resize(image, newSize, interpolation=cv2.INTER_NEAREST)
 
+def to_transform(image,option):
+    im = cv2.cvtColor(image, option)
+    return im
