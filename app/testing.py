@@ -1,6 +1,6 @@
 import cv2_rgb as cv2
 import numpy as np
-from ImageOperations import resizing
+from app.ImageOperations import resizing
 import base64
 from PIL import Image
 import io
@@ -15,7 +15,7 @@ def load_bibi():
     return main_array
 
 
-def save_image(image,name):
+def save_image(image, name):
     cv2.imwrite(name, image)
 
 

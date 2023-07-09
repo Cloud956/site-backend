@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from ImageOperations import *
-from testing import base64_to_image, save_image, image_to_base64
+from app.ImageOperations import *
+from app.testing import base64_to_image, save_image, image_to_base64
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -32,8 +32,8 @@ async def root(transformation: TransformationRequest):
     beginning = transformation.image.split(",")[0]
     image64 = transformation.image.split(",")[1]
     image = base64_to_image(image64)
-    save_image(image, "original.jpg")
+    image = resizing(image, 1080, 720)
     image_transformed = to_transform(image, cv2.COLOR_BGR2RGB)
-    save_image(image_transformed, "transformed.jpg")
+
     byes = image_to_base64(image_transformed)
-    return {"image": beginning +','+ byes}
+    return {"image": beginning + "," + byes}
