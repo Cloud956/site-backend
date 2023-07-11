@@ -1,6 +1,6 @@
 import cv2_rgb as cv2
 import numpy as np
-from app.ImageOperations import resizing
+from ImageOperations import resizing
 import base64
 from PIL import Image
 import io

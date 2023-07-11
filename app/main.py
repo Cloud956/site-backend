@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from app.ImageOperations import *
-from app.testing import base64_to_image, save_image, image_to_base64
+from ImageOperations import *
+from testing import base64_to_image, save_image, image_to_base64
 from fastapi.middleware.cors import CORSMiddleware
 
 
