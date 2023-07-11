@@ -14,9 +14,10 @@ class TransformationRequest(BaseModel):
 
 app = FastAPI()
 origins = [
-    "https://localhost:5173",
+    "http://localhost:5173/",
     "http://localhost:5173",
-
+    "http://18.184.42.144:5173/",
+    "http://18.184.42.144:5173",
 ]
 
 app.add_middleware(
