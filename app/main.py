@@ -13,11 +13,11 @@ class TransformationRequest(BaseModel):
 
 
 app = FastAPI()
-origins = ["http://18.184.42.144:5173/", "http://18.184.42.144:5173", ""]
+origins = ["http://18.184.42.144:5173/", "http://18.184.42.144:5173"]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
