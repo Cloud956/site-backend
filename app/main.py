@@ -74,7 +74,7 @@ async def root(transformation: TransformationRequest, request: Request):
     return {"image": beginning + "," + byes}
 
 
-@app.post("/transformations/to_hls")
+@app.post("/transformations/to_hsl")
 async def root(transformation: TransformationRequest, request: Request):
     header = request.headers.get("Origin")
     if header not in origins:
@@ -97,7 +97,7 @@ async def root(transformation: TransformationRequest, request: Request):
     image = transformation.image
     beginning, image = handle_start(image)
     p1, p2, p3 = transformation.param1, transformation.param2, transformation.param3
-    image_transformed = k_means(image, p1)
+    image_transformed = k_means(image, int(p1))
 
     byes = image_to_base64(image_transformed)
 
@@ -112,7 +112,7 @@ async def root(transformation: TransformationRequest, request: Request):
     image = transformation.image
     beginning, image = handle_start(image)
     p1, p2, p3 = transformation.param1, transformation.param2, transformation.param3
-    image_transformed = giveShapes(image, p1)
+    image_transformed = giveShapes(image, int(p1))
 
     byes = image_to_base64(image_transformed)
 
@@ -127,7 +127,7 @@ async def root(transformation: TransformationRequest, request: Request):
     image = transformation.image
     beginning, image = handle_start(image)
     p1, p2, p3 = transformation.param1, transformation.param2, transformation.param3
-    image_transformed = linear_sampling(image, p1)
+    image_transformed = linear_sampling(image, int(p1))
 
     byes = image_to_base64(image_transformed)
 
@@ -142,7 +142,7 @@ async def root(transformation: TransformationRequest, request: Request):
     image = transformation.image
     beginning, image = handle_start(image)
     p1, p2, p3 = transformation.param1, transformation.param2, transformation.param3
-    image_transformed = nearest_sampling(image, p1)
+    image_transformed = nearest_sampling(image, int(p1))
 
     byes = image_to_base64(image_transformed)
 
@@ -157,7 +157,7 @@ async def root(transformation: TransformationRequest, request: Request):
     image = transformation.image
     beginning, image = handle_start(image)
     p1, p2, p3 = transformation.param1, transformation.param2, transformation.param3
-    image_transformed = uniform_quan(image, p1)
+    image_transformed = uniform_quan(image, int(p1))
 
     byes = image_to_base64(image_transformed)
 
@@ -172,7 +172,7 @@ async def root(transformation: TransformationRequest, request: Request):
     image = transformation.image
     beginning, image = handle_start(image)
     p1, p2, p3 = transformation.param1, transformation.param2, transformation.param3
-    image_transformed = main_noise(image, p1)
+    image_transformed = main_noise(image, int(p1))
 
     byes = image_to_base64(image_transformed)
 
@@ -217,7 +217,7 @@ async def root(transformation: TransformationRequest, request: Request):
     image = transformation.image
     beginning, image = handle_start(image)
     p1, p2, p3 = transformation.param1, transformation.param2, transformation.param3
-    image_transformed = cartoonify(image, p1, p2, p3)
+    image_transformed = cartoonify(image, int(p1), int(p1), p3)
 
     byes = image_to_base64(image_transformed)
 
@@ -232,7 +232,7 @@ async def root(transformation: TransformationRequest, request: Request):
     image = transformation.image
     beginning, image = handle_start(image)
     p1, p2, p3 = transformation.param1, transformation.param2, transformation.param3
-    image_transformed = main_translate(image, p1, p2)
+    image_transformed = main_translate(image, int(p1), int(p2))
 
     byes = image_to_base64(image_transformed)
 
@@ -247,7 +247,7 @@ async def root(transformation: TransformationRequest, request: Request):
     image = transformation.image
     beginning, image = handle_start(image)
     p1, p2, p3 = transformation.param1, transformation.param2, transformation.param3
-    image_transformed = main_salt_pepper(image, p1)
+    image_transformed = main_salt_pepper(image, int(p1))
 
     byes = image_to_base64(image_transformed)
 
@@ -262,7 +262,7 @@ async def root(transformation: TransformationRequest, request: Request):
     image = transformation.image
     beginning, image = handle_start(image)
     p1, p2, p3 = transformation.param1, transformation.param2, transformation.param3
-    image_transformed = main_median_filter(image, p1)
+    image_transformed = main_median_filter(image, int(p1))
 
     byes = image_to_base64(image_transformed)
 
