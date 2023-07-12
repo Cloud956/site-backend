@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from pydantic import BaseModel
 from ImageOperations import *
 from testing import base64_to_image, save_image, image_to_base64
@@ -30,7 +30,11 @@ app.add_middleware(
 
 
 @app.post("/transformations/TO_RGB")
-async def root(transformation: TransformationRequest):
+async def root(transformation: TransformationRequest, request: Request):
+    header = request.headers.get("Origin")
+    if header not in origins:
+        return {"422"}
+
     beginning = transformation.image.split(",")[0]
     image64 = transformation.image.split(",")[1]
     image = base64_to_image(image64)
