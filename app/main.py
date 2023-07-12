@@ -89,20 +89,6 @@ async def root(transformation: TransformationRequest, request: Request):
     return {"image": beginning + "," + byes}
 
 
-@app.post("/transformations/k_means")
-async def root(transformation: TransformationRequest, request: Request):
-    header = request.headers.get("Origin")
-    if header not in origins:
-        raise HTTPException(status_code=422, detail="Unprocessable entity.")
-    image = transformation.image
-    beginning, image = handle_start(image)
-    p1, p2, p3 = transformation.param1, transformation.param2, transformation.param3
-    image_transformed = k_means(image, int(p1))
-
-    byes = image_to_base64(image_transformed)
-
-    return {"image": beginning + "," + byes}
-
 
 @app.post("/transformations/sobel_edge")
 async def root(transformation: TransformationRequest, request: Request):
@@ -217,7 +203,7 @@ async def root(transformation: TransformationRequest, request: Request):
     image = transformation.image
     beginning, image = handle_start(image)
     p1, p2, p3 = transformation.param1, transformation.param2, transformation.param3
-    image_transformed = cartoonify(image, int(p1), int(p1), p3)
+    image_transformed = cartoonify(image, int(p1), int(p2), p3)
 
     byes = image_to_base64(image_transformed)
 

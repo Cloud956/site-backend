@@ -41,9 +41,12 @@ def base64_to_image(transfer: str) -> np.ndarray:
 
 def image_to_base64(image: np.ndarray) -> str:
     img_pil = Image.fromarray(image)
+    if img_pil.mode != "RGB":
+        img_pil = img_pil.convert("RGB")
     with io.BytesIO() as output:
         img_pil.save(output, format="PNG")
         base64_image = base64.b64encode(output.getvalue()).decode("utf-8")
+
     return base64_image
 
 

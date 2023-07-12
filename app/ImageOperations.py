@@ -126,9 +126,9 @@ def translate(image, translation_matrix):
     return new_image
 
 
-def cartoonify(image, edge_factor, means_factor, outlines_factor):
+def cartoonify(image, edge_factor, num_of_colors, outlines_factor):
     s = giveShapes(image, edge_factor)
-    im = k_means(image, means_factor)
+    im = uniform_quan(image, num_of_colors)
     addOutlines(im, s / 255, outlines_factor)
     return im
 
