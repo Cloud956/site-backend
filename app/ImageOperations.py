@@ -2,29 +2,34 @@ import cv2_rgb as cv2, numpy as np, math, random
 from scipy.signal import convolve2d
 from skimage.util import random_noise
 
+
 def denoise(image):
-    if len(image.shape)==3:
-        image=cv2.cvtColor(image,cv2.COLOR_RGB2GRAY)
+    if len(image.shape) == 3:
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     FT = np.fft.fft2(image)
     keeping = 0.05
     FTcopy = FT.copy()
     h, w = FTcopy.shape
-    FTcopy[int(h * keeping):int(w * (1 - keeping))] = 1
-    FTcopy[:, int(w * keeping):int(w * (1 - keeping))] = 1
-    return (np.fft.ifft2(FTcopy).real)
+    FTcopy[int(h * keeping) : int(w * (1 - keeping))] = 1
+    FTcopy[:, int(w * keeping) : int(w * (1 - keeping))] = 1
+    return np.fft.ifft2(FTcopy).real
+
+
 def givePower(image):
-    if len(image.shape)==3:
-        image=cv2.cvtColor(image,cv2.COLOR_RGB2GRAY)
+    if len(image.shape) == 3:
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     FTT2 = np.fft.fft2(image)
     FTT2S = np.fft.fftshift(FTT2)
     FTT2SM = np.log(np.abs(FTT2S))
-    P2 = FTT2SM ** 2
+    P2 = FTT2SM**2
     maximal = np.max(P2)
-    P2=P2/(maximal/255)
+    P2 = P2 / (maximal / 255)
     return P2
+
+
 def giveMagnitude(image):
-    if len(image.shape)==3:
-        image=cv2.cvtColor(image,cv2.COLOR_RGB2GRAY)
+    if len(image.shape) == 3:
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     FTT2 = np.fft.fft2(image)
     FTT2S = np.fft.fftshift(FTT2)
     FTT2SM = np.log(np.abs(FTT2S))
@@ -35,9 +40,7 @@ def giveMagnitude(image):
 
 
 def main_translate(image, t1, t2):
-    T_matrix = np.array([[1, 0, t1],
-                         [0, 1, t2],
-                         [0, 0, 1]])
+    T_matrix = np.array([[1, 0, t1], [0, 1, t2], [0, 0, 1]])
     return translate(image, T_matrix)
 
 
@@ -46,6 +49,8 @@ def main_periodic_noise_horizontal(image):
         return all_periodic_noise_horizontal(image)
     else:
         return periodic_noise_horizontal(image)
+
+
 def main_periodic_noise_vertical(image):
     if len(image.shape) == 3:
         return all_periodic_noise_vertical(image)
@@ -59,13 +64,14 @@ def all_periodic_noise_horizontal(image):
     gN = periodic_noise_horizontal(g)
     rN = periodic_noise_horizontal(r)
     return cv2.merge([bN, gN, rN])
+
+
 def all_periodic_noise_vertical(image):
     b, g, r = cv2.split(image)
     bN = periodic_noise_vertical(b)
     gN = periodic_noise_vertical(g)
     rN = periodic_noise_vertical(r)
     return cv2.merge([bN, gN, rN])
-
 
 
 def periodic_noise_horizontal(image):
@@ -76,6 +82,8 @@ def periodic_noise_horizontal(image):
             if x % 2 == 0 or x % 3 == 0:
                 newImage[x][y] += 0.5
     return (np.clip(newImage, 0, 1) * 255).astype(np.uint8)
+
+
 def periodic_noise_vertical(image):
     # Adds periodic noise, adding 0.5 to intensity of every pixel in a row if x divisible by 2 or 3
     newImage = image / 255
@@ -106,8 +114,14 @@ def median_filter(image, size):
     for x in range(image.shape[0]):
         for y in range(image.shape[1]):
             values = []
-            for i in range(int(max(0, x - (size - 1) / 2)), int(min(image.shape[0] - 1, x + (size - 1) / 2))):
-                for j in range(int(max(0, y - (size - 1) / 2)), int(min(image.shape[1] - 1, y + (size - 1) / 2))):
+            for i in range(
+                int(max(0, x - (size - 1) / 2)),
+                int(min(image.shape[0] - 1, x + (size - 1) / 2)),
+            ):
+                for j in range(
+                    int(max(0, y - (size - 1) / 2)),
+                    int(min(image.shape[1] - 1, y + (size - 1) / 2)),
+                ):
                     values.append(image[i][j])
             val = np.median(values)
             output[x][y] = val
@@ -129,7 +143,7 @@ def translate(image, translation_matrix):
 def cartoonify(image, edge_factor, num_of_colors, outlines_factor):
     s = giveShapes(image, edge_factor)
     im = uniform_quan(image, num_of_colors)
-    addOutlines(im, s / 255, outlines_factor)
+    addOutlines(im, s / 255, (1 - outlines_factor))
     return im
 
 
@@ -188,12 +202,14 @@ def uniform_quantization(GrayImage, q):
         QImage = np.zeros(GrayImage.shape)
         for x in range(GrayImage.shape[0]):
             for y in range(GrayImage.shape[1]):
-                QImage[x][y] = math.floor(float(GrayImage[x][y]) / (256.0 / q)) * (256 / q)
+                QImage[x][y] = math.floor(float(GrayImage[x][y]) / (256.0 / q)) * (
+                    256 / q
+                )
         return QImage.astype(np.uint8)
     else:
         bins = np.linspace(GrayImage.min(), GrayImage.max(), q)
         QImage = np.digitize(GrayImage, bins)
-        QImage = (np.vectorize(bins.tolist().__getitem__)(QImage - 1).astype(int))
+        QImage = np.vectorize(bins.tolist().__getitem__)(QImage - 1).astype(int)
         return QImage.astype(np.uint8)
 
 
@@ -208,20 +224,22 @@ def main_noise(image, seed):
 def noise(im, seed, bool=0):
     if bool == 0:
         b, g, r = cv2.split(im)
-        bN = random_noise(b, mode='gaussian', seed=seed)
-        gN = random_noise(g, mode='gaussian', seed=seed)
-        rN = random_noise(r, mode='gaussian', seed=seed)
+        bN = random_noise(b, mode="gaussian", seed=seed)
+        gN = random_noise(g, mode="gaussian", seed=seed)
+        rN = random_noise(r, mode="gaussian", seed=seed)
         # print(np.shape(b))
         bN = (255 * bN).astype(np.uint8)
         gN = (255 * gN).astype(np.uint8)
         rN = (255 * rN).astype(np.uint8)
         return cv2.merge([bN, gN, rN])
     else:
-        noised = random_noise(im, mode='gaussian', seed=seed)
+        noised = random_noise(im, mode="gaussian", seed=seed)
         return (noised * 255).astype(np.uint8)
 
 
-def allcolors_quantization(Image, q):  # splits colors and applies uniform quantization separately
+def allcolors_quantization(
+    Image, q
+):  # splits colors and applies uniform quantization separately
     b, g, r = cv2.split(Image)
     b2 = uniform_quantization(b, q)
     g2 = uniform_quantization(g, q)
@@ -252,12 +270,8 @@ def nearest_sampling(image, factor):
 def giveShapes(image, factor=5):
     if len(image.shape) == 3:
         image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY) * 255
-    SOBEL_X = np.array([[1, 2, 1],
-                        [0, 0, 0],
-                        [-1, -2, -1]])
-    SOBEL_Y = np.array([[1, 0, -1],
-                        [2, 0, -2],
-                        [1, 0, -1]])
+    SOBEL_X = np.array([[1, 2, 1], [0, 0, 0], [-1, -2, -1]])
+    SOBEL_Y = np.array([[1, 0, -1], [2, 0, -2], [1, 0, -1]])
 
     # By trial and error, for sharp outcome I multiply the normalization factor by 5
     normalization = 1 / sumUp(SOBEL_X) * factor
@@ -280,12 +294,12 @@ def addOutlines(image, shape, number):
     if len(image.shape) == 3:
         for x in range(shape.shape[0]):
             for y in range(shape.shape[1]):
-                if (shape[x][y] > number):
+                if shape[x][y] > number:
                     image[x][y] = [0, 0, 0]
     else:
         for x in range(shape.shape[0]):
             for y in range(shape.shape[1]):
-                if (shape[x][y] > number):
+                if shape[x][y] > number:
                     image[x][y] = 0
 
 
@@ -321,7 +335,9 @@ def k_means(image, k):
     pixel_values = image.reshape(-1, 3)
     pixel_values = np.float32(pixel_values)
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.2)
-    _, labels, (centers) = cv2.kmeans(pixel_values, k, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
+    _, labels, (centers) = cv2.kmeans(
+        pixel_values, k, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS
+    )
     centers = np.uint8(centers)
     labels.flatten()
     segmented_image = centers[labels.flatten()]
@@ -329,11 +345,9 @@ def k_means(image, k):
     return segmented_image
 
 
-
-
 def resizing(image, *args):
     if len(args) == 1:
-        scale, = args
+        (scale,) = args
         width = int(image.shape[1] * scale / 100)
         height = int(image.shape[0] * scale / 100)
         newSize = (width, height)
@@ -343,6 +357,7 @@ def resizing(image, *args):
         newSize = (width, height)
         return cv2.resize(image, newSize, interpolation=cv2.INTER_NEAREST)
 
-def to_transform(image,option):
+
+def to_transform(image, option):
     im = cv2.cvtColor(image, option)
     return im
