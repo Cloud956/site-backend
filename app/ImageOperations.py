@@ -74,7 +74,7 @@ def periodic_noise_horizontal(image):
     for x in range(image.shape[0]):
         for y in range(image.shape[1]):
             if x % 2 == 0 or x % 3 == 0:
-                newImage[x][y] += 0.4
+                newImage[x][y] += 0.5
     return (np.clip(newImage, 0, 1) * 255).astype(np.uint8)
 def periodic_noise_vertical(image):
     # Adds periodic noise, adding 0.5 to intensity of every pixel in a row if x divisible by 2 or 3
@@ -82,7 +82,7 @@ def periodic_noise_vertical(image):
     for x in range(image.shape[0]):
         for y in range(image.shape[1]):
             if y % 2 == 0 or y % 3 == 0:
-                newImage[x][y] += 0.4
+                newImage[x][y] += 0.5
     return (np.clip(newImage, 0, 1) * 255).astype(np.uint8)
 
 
@@ -327,8 +327,6 @@ def k_means(image, k):
     segmented_image = centers[labels.flatten()]
     segmented_image = segmented_image.reshape(image.shape)
     return segmented_image
-    # This function takes a grayscale images of edges, with edges being white
-    # it applies the edges as black onto the image
 
 
 

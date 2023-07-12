@@ -524,7 +524,7 @@ def median_filter_exec(numbers, image):
 
 
 def uniform_quan_exec(numbers, image):
-    im = uniform_quan(main_array, numbers)
+    im = uniform_quan(image, numbers)
     update_image(im)
 
 
@@ -580,9 +580,3 @@ def load_file():
 def main():
     global root
     makeBasic()
-    setWhite()
-    root.mainloop()
-
-
-if __name__ == "__main__":
-    main()

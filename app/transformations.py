@@ -45,3 +45,11 @@ def image_to_base64(image: np.ndarray) -> str:
         img_pil.save(output, format="PNG")
         base64_image = base64.b64encode(output.getvalue()).decode("utf-8")
     return base64_image
+
+
+def handle_start(image: str):
+    beginning = image.split(",")[0]
+    image64 = image.split(",")[1]
+    image = base64_to_image(image64)
+    image = resizing(image, 1080, 720)
+    return beginning, image
