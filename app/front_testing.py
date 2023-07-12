@@ -1,5 +1,5 @@
 import requests
-from app.transformations import image_array_to_bytes, bytes_to_image_array, load_bibi
+from transformations import image_array_to_bytes,  load_bibi
 import cv2_rgb as cv2
 ip = 'http://127.0.0.1:8000'
 

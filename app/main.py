@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, HTTPException
 from pydantic import BaseModel
 from ImageOperations import *
-from app.transformations import handle_start, image_to_base64
+from transformations import handle_start, image_to_base64
 from fastapi.middleware.cors import CORSMiddleware
 
 
