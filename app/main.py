@@ -33,7 +33,7 @@ app.add_middleware(
 async def root(transformation: TransformationRequest, request: Request):
     header = request.headers.get("Origin")
     if header not in origins:
-        raise HTTPException(status_code="422", detail="Unprocessable entity.")
+        raise HTTPException(status_code=422, detail="Unprocessable entity.")
 
     beginning = transformation.image.split(",")[0]
     image64 = transformation.image.split(",")[1]
