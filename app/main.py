@@ -13,12 +13,7 @@ class TransformationRequest(BaseModel):
 
 
 app = FastAPI()
-origins = [
-    "http://18.184.42.144:5173",
-    "https://18.184.42.144:5173",
-    "http://18.184.42.144:443",
-    "https://18.184.42.144:443",
-]
+origins = ["https://www.image-processing-app.com", "https://image-processing-app.com"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -87,7 +82,6 @@ async def root(transformation: TransformationRequest, request: Request):
     byes = image_to_base64(image_transformed)
 
     return {"image": beginning + "," + byes}
-
 
 
 @app.post("/transformations/sobel_edge")
